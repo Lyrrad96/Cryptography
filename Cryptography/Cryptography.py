@@ -14,6 +14,11 @@ fname=StringVar()
 
 from PIL import Image
 
+'''
+Steganography
+'''
+
+
 # Convert encoding data into 8-bit binary
 # form using ASCII value of characters
 def genData(data):
@@ -73,6 +78,8 @@ def modPix(pix, data):
         yield pix[0:3]
         yield pix[3:6]
         yield pix[6:9]
+
+# Steg encode
 
 def encode_enc(newimg, data):
     w = newimg.size[0]
@@ -139,6 +146,12 @@ def decode():
         data += chr(int(binstr, 2))
         if (pixels[-1] % 2 != 0):
             return data
+
+
+'''
+RSA
+'''
+
 
 def gcd(a, b):
     """
@@ -335,6 +348,8 @@ def stegdec():
     Label(root, text='Text is :').grid(row=7, column=0)
     Label(root, text=decrypt(decode())).grid(row=7, column=1)
     #Label(root, text='Enter image name').grid(row=7, column=0)
+    Label(root, text='Decryption Completed', font="bold").grid(row=20, column=0)
+
     Button(root, text='quit', command=quit).grid(row=30, column=0)
 
     #Button(root, text='next', command=dec).grid(row=6, column=3)
@@ -345,10 +360,10 @@ def printenc():
 def enc():
 
     f=open("RSA_encrypted.txt","w")
-    g=open(fname.get(), "r")
-    f.write(encrypt(g.read()))
+    #g=open(fname.get(), "r")
+    f.write(encrypt(message.get()))
     f.close()
-    g.close()
+    #g.close()
     Label(root, text='RSA Completed', font="bold").grid(row=8, column=0)
     Button(root, text='Perform\nsteganography', command=stegenc).grid(row=8, column=3)
 
@@ -361,15 +376,12 @@ def key():
 def choice():
     if ch.get()=='e':
         Label(root, text='What do you want to encrypt?').grid(row=5, column=0)
-        Entry(root, text='Enter filename', textvariable=fname).grid(row=8, column=1, rowspan=2)
-
-        #Entry(root, textvariable=message).grid(row=5, column=1)
-        Button(root, text='next', command=key).grid(row=5, column=3)
+        #Entry(root, text='Enter filename', textvariable=fname).grid(row=5, column=1, rowspan=2)
+        Entry(root, textvariable=message).grid(row=5, column=1)
     else:
         Label(root, text='Enter image name').grid(row=5, column=0)
         Entry(root, textvariable=img).grid(row=5, column=1)
         Button(root, text='decrypt', command=stegdec).grid(row=5, column=3)
-
 Label(root, text='Cryptography', font=("Times", 30)).grid(row=0, column=0, rowspan=2, columnspan=2)
 Label(root, text='RSA', font=("MS\ Serif", 20)).grid(row=2, column=0)
 Label(root, text='What would you like to do?').grid(row=4, column=0)
@@ -378,6 +390,11 @@ Radiobutton(root, text='Decrypt', variable=ch, value='d').grid(row=4, column=2)
 Button(root, text='next', command=choice).grid(row=4, column=3)
 
 
-Button(root, text='quit', command=quit).grid(row=30, column=0)
+
+
+
+#Button(root, text='quit', command=quit).grid(row=30, column=0)
+
+
 
 root.mainloop()
